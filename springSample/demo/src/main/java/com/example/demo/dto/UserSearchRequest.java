@@ -7,6 +7,13 @@ import lombok.Data;
 /* ユーザー情報　検索用リスエストデータ */
 @Data
 public class UserSearchRequest implements Serializable{
-  /* ユーザーID */
+  /**
+   * ユーザーID
+   * */
   private Long id;
+
+  /**
+   * ユーザー名
+   */
+  private String name;
 }
