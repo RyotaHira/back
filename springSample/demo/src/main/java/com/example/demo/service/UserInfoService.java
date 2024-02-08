@@ -11,7 +11,7 @@ import com.example.demo.dto.UserSearchRequest;
 import com.example.demo.dto.UserUpdateRequest;
 import com.example.demo.entity.UserInfo;
 
-@Service
+@Service // いろいろな処理(ビジネスロジック)を行うクラス
 public class UserInfoService {
   @Autowired
   private UserInfoMapper userInfoMapper;
@@ -45,8 +45,8 @@ public class UserInfoService {
    * ユーザ情報登録
    * @param userAddRequest リクエストデータ
    */
-  public void save(UserAddRequest userAddRequest) {
-      userInfoMapper.save(userAddRequest);
+  public void insert(UserAddRequest userAddRequest) {
+      userInfoMapper.insert(userAddRequest);
   }
   /**
    * ユーザ情報更新

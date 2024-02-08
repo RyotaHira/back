@@ -5,6 +5,7 @@ import java.util.Date;
 import lombok.Data;
 /**
  * ユーザー情報 Entity
+ * スネークケース(aaa_case)はキャメルケース(aaaCase)に変換する
  */
 @Data
 public class UserInfo implements Serializable {

@@ -1,5 +1,10 @@
 <!DOCTYPE html>
+<!-- Thymleaf宣言 -->
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <!--
+    th:replace="ページ名"::fregment名で置き換える
+    ~{::script}と~{::link}はhead_fragmentと同じフラグメントが渡される
+  -->
   <head
     th:replace="common/head :: head_fragment(title = 'ユーザー情報一覧', scripts = ~{::script}, links = ~{::link})"
   ></head>
@@ -8,21 +13,21 @@
       <h1>ユーザー情報一覧</h1>
       <div class="float-end">
         <!--
-          リンク先のURLを動的に生成する
-          th:href="@{}"
+          user/addに遷移する
         -->
         <a th:href="@{/user/add}" class="btn btn-primary">新規登録はこちら</a>
       </div>
       <!-- 
-        th:object="${userSearchRequest}" Modelに登録されたキーを指定
+        th:action="@{/user/search}"は/user/searchへのPOSTリクエスト
+        th:object="${userSearchRequest}"はフォームで扱うオブジェクト
       -->
       <form th:action="@{/user/search}" th:object="${userSearchRequest}" th:method="post">
         <div class="form-group">
-          <label for="id">ID</label>
           <!--
-            Javaクラスと画面入力内容をバインド(紐づけ)することができる
             th:field="${Modelに登録されたキー名}.{変数名}"
+            Javaクラス(userSearchRequest)と画面入力内容をバインド(紐づけ)することができる
           -->
+          <label for="id">ID</label>
           <input type="text" class="w-25 form-control" th:field="*{id}" />
           <label for="name">名前</label>
           <input type="text" class="w-50 form-control" th:field="*{name}" />
@@ -31,8 +36,8 @@
         <button type="submit" class="btn btn-primary">検索</button>
       </form>
       <!--
-        条件判定を行い、trueならタグをhtmlに適用する
         th:if="${条件式}"
+        条件判定を行い、trueならタグをhtmlに適用する
       -->
       <div th:if="${userlist}">
         <table class="table table-striped">
@@ -50,7 +55,7 @@
           </thead>
           <tbody>
             <!--
-              th:each="変数 : ${Modelに登録されたmap or list}"
+              th:each="変数 : ${Modelに登録されたmap or list}" キーに登録された値を繰り返す
               th:object="${Modelに登録されたキー}" (下記ではuser変数として扱っている)
             -->
             <tr th:each="user : ${userlist}" th:object="${user}" class="align-middle">
@@ -63,7 +68,7 @@
               <td th:text="${#dates.format(user.deleteDate, 'yyyy/MM/dd')}"></td>
               <td>
                 <!--
-                  idがcontrollrに渡される
+                  idがcontrollerに渡される
                 -->
                 <a th:href="@{/user/{id}/edit(id=*{id})}" class="btn btn-primary">編集</a>
                 <a th:href="@{/user/{id}/delete(id=*{id})}" class="btn btn-secondary">削除</a>
